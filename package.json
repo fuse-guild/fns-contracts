@@ -6,6 +6,10 @@
     "test": "npx hardhat test",
     "lint": "npx hardhat check",
     "build": "npx hardhat compile",
+    "deploy:rinkeby": "npx hardhat run --network rinkeby scripts/wrapper/deploy.js",
+    "deploy:ropsten": "npx hardhat run --network ropsten scripts/wrapper/deploy.js",
+    "deploy:kovan": "npx hardhat run --network kovan scripts/wrapper/deploy.js",
+    "deploy:mainnet": "npx hardhat run --network mainnet scripts/wrapper/deploy.js",
     "prepublishOnly": "yarn build",
     "pub": "yarn publish --access public"
   },
@@ -44,7 +48,8 @@
     "@ensdomains/buffer": "^0.0.13",
     "@ensdomains/solsha1": "0.0.3",
     "@openzeppelin/contracts": "^4.1.0",
-    "dns-packet": "^5.3.0"
+    "dns-packet": "^5.3.0",
+    "envfile": "^6.17.0"
   },
   "directories": {
     "test": "test"
