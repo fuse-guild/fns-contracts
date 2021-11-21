@@ -39,37 +39,45 @@ module.exports = {
       // Required for real DNS record tests
       initialDate: "2019-03-15T14:06:45.000+13:00",
       saveDeployments: false,
-      tags: ["test", "legacy", "use_root"],
+      tags: ["test", "use_root"],
     },
     localhost: {
       url: "http://127.0.0.1:9545",
       saveDeployments: false,
-      tags: ["test", "legacy", "use_root"],
+      tags: ["test", "use_root"],
     },
     ropsten: {
       url: `https://ropsten.infura.io/v3/${process.env.INFURA_ID}`,
-      tags: ["test", "legacy", "use_root"],
+      tags: ["test", "use_root"],
       chainId: 3,
       accounts: real_accounts,
     },
     rinkeby: {
       url: `https://rinkeby.infura.io/v3/${process.env.INFURA_ID}`,
-      tags: ["test", "legacy", "use_root"],
+      tags: ["test", "use_root"],
       chainId: 4,
       accounts: real_accounts,
     },
     kovan: {
       url: `https://kovan.infura.io/v3/${process.env.INFURA_ID}`,
-      tags: ["test", "legacy", "use_root"],
+      tags: ["test", "use_root"],
       chainId: 42,
       accounts: real_accounts,
     },
-    mainnet: {
-      url: `https://mainnet.infura.io/v3/${process.env.INFURA_ID}`,
-      tags: ["legacy", "use_root"],
-      chainId: 1,
+    fuse: {
+      url: "https://rpc.fuse.io",
+      tags: ["use_root"],
+      chainId: 122,
       accounts: real_accounts,
-    }
+      gasPrice: 1,
+    },
+    spark: {
+      url: "https://rpc.fusespark.io",
+      tags: ["test", "use_root"],
+      chainId: 123,
+      accounts: real_accounts,
+      gasPrice: 1,
+    },
   },
   etherscan: {
     // Your API key for Etherscan
