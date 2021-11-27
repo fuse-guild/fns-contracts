@@ -69,14 +69,14 @@ module.exports = {
       tags: ["use_root"],
       chainId: 122,
       accounts: real_accounts,
-      gasPrice: 1,
+      gasPrice: 1000000000,
     },
     spark: {
       url: "https://rpc.fusespark.io",
       tags: ["test", "use_root"],
       chainId: 123,
       accounts: real_accounts,
-      gasPrice: 1,
+      gasPrice: 1000000000,
     },
   },
   etherscan: {
