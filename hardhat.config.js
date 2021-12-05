@@ -1,3 +1,4 @@
+require("@nomiclabs/hardhat-etherscan");
 require("@nomiclabs/hardhat-truffle5");
 require("@nomiclabs/hardhat-waffle");
 require("hardhat-abi-exporter");
@@ -26,8 +27,8 @@ task("accounts", "Prints the list of accounts", async () => {
 // Go to https://hardhat.org/config/ to learn more
 
 real_accounts = undefined;
-if(process.env.DEPLOYER_KEY && process.env.OWNER_KEY) {
-  real_accounts = [process.env.DEPLOYER_KEY, process.env.OWNER_KEY];
+if(process.env.DEPLOYER_KEY) {
+  real_accounts = [process.env.DEPLOYER_KEY];
 }
 
 /**
@@ -64,7 +65,7 @@ module.exports = {
       chainId: 42,
       accounts: real_accounts,
     },
-    fuse: {
+    mainnet: {
       url: "https://rpc.fuse.io",
       tags: ["use_root"],
       chainId: 122,
@@ -108,9 +109,6 @@ module.exports = {
   namedAccounts: {
     deployer: {
       default: 0,
-    },
-    owner: {
-      default: 1,
     },
   },
 };

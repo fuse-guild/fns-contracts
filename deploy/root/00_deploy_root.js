@@ -4,7 +4,7 @@ const ZERO_HASH = '0x00000000000000000000000000000000000000000000000000000000000
 
 module.exports = async ({getNamedAccounts, deployments, network}) => {
     const {deploy} = deployments;
-    const {deployer, owner} = await getNamedAccounts();
+    const {deployer} = await getNamedAccounts();
 
     if(!network.tags.use_root) {
         return true;
@@ -25,21 +25,21 @@ module.exports = async ({getNamedAccounts, deployments, network}) => {
     await tx.wait();
     
     const rootOwner = await root.owner();
-    switch(rootOwner) {
-    case deployer:
-        tx = await root.attach(deployer).transferOwnership(owner);
-        console.log(`Transferring root ownership to final owner (tx: ${tx.hash})...`);
-        await tx.wait();
-    case owner:
-        if(!await root.controllers(owner)) {
-            tx = await root.attach(owner).setController(owner, true);
-            console.log(`Setting final owner as controller on root contract (tx: ${tx.hash})...`);
+    // switch(rootOwner) {
+    // case deployer:
+    //     tx = await root.transferOwnership(owner);
+    //     console.log(`Transferring root ownership to final owner (tx: ${tx.hash})...`);
+    //     await tx.wait();
+    // case owner:
+        if(!await root.controllers(deployer)) {
+            tx = await root.setController(deployer, true);
+            console.log(`Setting deployer as controller on root contract (tx: ${tx.hash})...`);
             await tx.wait();
         }
-        break;
-    default:
-        console.log(`WARNING: Root is owned by ${rootOwner}; cannot transfer to owner account`);
-    }
+    //     break;
+    // default:
+    //     console.log(`WARNING: Root is owned by ${rootOwner}; cannot transfer to owner account`);
+    // }
 
     return true;
 };

@@ -1,3 +1,4 @@
+const delayMS = 8000 //sometimes Fuse needs a 8000ms break lol 😅
 const packet = require('dns-packet');
 
 const realAnchors = [
@@ -90,30 +91,46 @@ module.exports = async ({getNamedAccounts, deployments, network}) => {
     });
     const dnssec = await ethers.getContract('DNSSECImpl');
 
-    const transactions = [];
+    // const transactions = [];
     for(const [id, alg] of Object.entries(algorithms)) {
+      console.log(`Verifying address for DNSSEC algorithm ${alg} with id ${id} `);
       const address = (await deployments.get(alg)).address;
+      console.log(address);
+      console.log(await dnssec.algorithms(id));
       if(address != await dnssec.algorithms(id)) {
-        transactions.push(await dnssec.setAlgorithm(id, address));
+        const tx = await dnssec.setAlgorithm(id, address);
+        console.log(`Waiting on ${tx.hash} transaction setting ${address} for DNSSEC algorithm ${id} ...`);
+        await tx.wait();
+        // await sleep(delayMS);
       }
     }
 
     for(const [id, digest] of Object.entries(digests)) {
+      console.log(`Verifying address for DNSSEC digest ${digest} with id ${id} `);
       const address = (await deployments.get(digest)).address;
+      console.log(address);
+      console.log(await dnssec.digests(id));
       if(address != await dnssec.digests(id)) {
-        transactions.push(await dnssec.setDigest(id, address));
+        const tx = await dnssec.setDigest(id, address);
+        console.log(`Waiting on ${tx.hash} transaction setting ${address} for DNSSEC algorithm ${id} ...`);
+        await tx.wait();
       }
     }
 
     for(const [id, digest] of Object.entries(nsec_digests)) {
+      console.log(`Verifying address for DNSSEC nsec_digest ${digest} with id ${id} `);
       const address = (await deployments.get(digest)).address;
+      console.log(address);
+      console.log(await dnssec.nsec3Digests(id));
       if(address != await dnssec.nsec3Digests(id)) {
-        transactions.push(await dnssec.setNSEC3Digest(id, address));
+        const tx = await dnssec.setNSEC3Digest(id, address);
+        console.log(`Waiting on ${tx.hash} transaction setting ${address} for DNSSEC algorithm ${id} ...`);
+        await tx.wait();
       }
     }
 
-    console.log(`Waiting on ${transactions.length} transactions setting DNSSEC parameters`);
-    await Promise.all(transactions.map((tx) => tx.wait()));
+    // console.log(`Waiting on ${transactions.length} transactions setting DNSSEC parameters`);
+    // await Promise.all(transactions.map((tx) => tx.wait()));
 };
 module.exports.tags = ['dnssec-oracle'];
 module.exports.dependencies = ['dnssec-algorithms', 'dnssec-digests', 'dnssec-nsec3-digests'];
