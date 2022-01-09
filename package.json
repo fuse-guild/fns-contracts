@@ -1,6 +1,6 @@
 {
   "name": "@ensdomains/ens-contracts",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "ENS contracts",
   "scripts": {
     "test": "npx hardhat test",
@@ -17,8 +17,9 @@
   },
   "files": [
     "build/contracts/*json",
-    "contracts/*",
-    "artifacts/contracts/*/*/*.json"
+    "contracts/**/*.sol",
+    "artifacts/contracts/**/*.json",
+    "deployments/mainnet/*.json"
   ],
   "main": "index.js",
   "devDependencies": {
@@ -42,7 +43,8 @@
     "hardhat-deploy-ethers": "^0.3.0-beta.10",
     "hardhat-gas-reporter": "^1.0.4",
     "rfc4648": "^1.5.0",
-    "truffle-flattener": "github:jplew/truffle-flattener"
+    "truffle-flattener": "github:jplew/truffle-flattener",
+    "np": "^7.6.0"
   },
   "resolutions": {
     "ethereum-ens": "0.8.0",
