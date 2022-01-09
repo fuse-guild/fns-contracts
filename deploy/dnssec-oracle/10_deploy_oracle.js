@@ -83,7 +83,8 @@ module.exports = async ({getNamedAccounts, deployments, network}) => {
         algorithms[254] = 'DummyAlgorithm';
         digests[253] = 'DummyDigest';
     }
-
+    
+    console.log(`encodeAnchors(anchors): ${encodeAnchors(anchors)}`);
     await deploy('DNSSECImpl', {
         from: deployer,
         args: [encodeAnchors(anchors)],

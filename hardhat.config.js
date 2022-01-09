@@ -65,7 +65,7 @@ module.exports = {
       chainId: 42,
       accounts: real_accounts,
     },
-    mainnet: {
+    fuse: {
       url: "https://rpc.fuse.io",
       tags: ["use_root"],
       chainId: 122,
